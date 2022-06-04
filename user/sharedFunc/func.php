@@ -19,7 +19,7 @@ function auth()
     } else {
         echo "not admin";
         echo "<script>
-        window.location.replace('http://localhost/ivisitor/admin/pages-login.php')
+        window.location.replace('http://localhost/ivisitor/user/pages-login.php)
     </script>";
     }
 }

@@ -1,29 +1,24 @@
 <?php
 include './shared/head.php';
 include './sharedFunc/db.php';
+include './sharedFunc/func.php';
 
 if (isset($_POST['login'])) {
-  $name = $_POST['name'];
+  $email = $_POST['email'];
   $password = $_POST['password'];
-  $typeLogin = $_POST['typeLogin'];
-  if($typeLogin == 0 ){
-    $select  = "SELECT * FROM `admin` where  `name` = '$name' and `password`= '$password'";
-    $s =  mysqli_query($conn, $select);
-   
-  }elseif($typeLogin==1){
-    $select  = "SELECT * FROM `travel_agency` where  `name` = '$name' and `password`= '$password'";
-    $s =  mysqli_query($conn, $select);
-    $_SESSION['travel'] = $name;
-  }
+ 
+  $select  = "SELECT * FROM `users` where  `email` = '$email' and `password`= '$password'";
+  $s =  mysqli_query($conn, $select);
+
   $numOfRows = mysqli_num_rows($s);
   $row = mysqli_fetch_assoc($s);
   if ($numOfRows > 0) {
-    $_SESSION['admin'] = $name;
+    $_SESSION['admin'] =$email;
     $_SESSION['adminId'] = $row['id'];
     $_SESSION['email'] = $row['email'];
     $_SESSION['image'] = $row['image'];
     $_SESSION['job'] = $row['job'];
-    header("LOCATION:/ivisitor/admin/");
+    header("LOCATION:/ivisitor/user/");
   } else {
     echo "<div class=' mt-5  alert alert-danger mx-auto w-50'>
     <h3>   Wrong Password OR User Name </h3>
@@ -59,11 +54,11 @@ print_r($_SESSION);
                 <form class="row g-3 needs-validation" novalidate method="POST">
 
                   <div class="col-12">
-                    <label for="yourUsername" class="form-label">Username</label>
+                    <label for="yourUsername" class="form-label">Email</label>
                     <div class="input-group has-validation">
                       <span class="input-group-text" id="inputGroupPrepend">@</span>
-                      <input type="text" name="name" class="form-control" id="yourUsername" required>
-                      <div class="invalid-feedback">Please enter your username.</div>
+                      <input type="email" name="email" class="form-control" require >
+                      <div class="invalid-feedback">Please enter your email.</div>
                     </div>
                   </div>
 
@@ -72,13 +67,7 @@ print_r($_SESSION);
                     <input type="password" name="password" class="form-control" id="yourPassword" required>
                     <div class="invalid-feedback">Please enter your password!</div>
                   </div>
-                  <div class="col-12">
-                    <label for="yourPassword" class="form-label">Password</label>
-                    <select name="typeLogin" class="form-control">
-                      <option value="0"> Login As Admin </option>
-                      <option value="1"> Login travel_agency</option>
-                    </select>
-                  </div>
+
                   <div class="col-12">
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
@@ -89,7 +78,7 @@ print_r($_SESSION);
                     <button name="login" class="btn btn-primary w-100" type="submit">Login</button>
                   </div>
                   <div class="col-12">
-                    <p class="small mb-0">Don't have account? <a href="/ivisitor/admin/travelAgenecy/add.php">Create an account</a></p>
+                    <p class="small mb-0">Don't have account? <a href="/ivisitor/user/admins/add.php">Create an account</a></p>
                   </div>
                 </form>
 
