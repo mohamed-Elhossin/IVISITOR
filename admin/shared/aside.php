@@ -81,9 +81,9 @@
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="/ivisitor/admin/pages-login.php">
+        <a class="nav-link collapsed" href="/ivisitor/admin/orders.php">
           <i class="bi bi-box-arrow-in-right"></i>
-          <span>Login</span>
+          <span>Order Details</span>
         </a>
       </li><!-- End Login Page Nav -->
     <?php endif; ?>

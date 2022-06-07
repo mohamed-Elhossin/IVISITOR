@@ -39,7 +39,7 @@ if (isset($_GET['booking'])) {
                             Cash <input type="radio" name="way">
                             Visa <input type="radio" name="way">
                             Voda Cash <input type="radio" name="way">
-                            <button name="pay" class="btn mt-3 btn-info btn-block w-50 mx-auto"> pay now </button>
+                            <button onclick="return confirm('are you sure !')" name="pay" class="btn mt-3 btn-info btn-block w-50 mx-auto"> pay now </button>
                         </form>
 
                     </div>
