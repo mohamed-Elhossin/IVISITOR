@@ -1,12 +1,21 @@
 <?php
 include '../shared/head.php';
-include '../shared/header.php';
-include '../shared/aside.php';
-include '../sharedFunc/db.php';
-include '../sharedFunc/func.php';
 
-$select = "SELECT * FROM `admin`";
-$admins = mysqli_query($conn, $select);
+include '../sharedFunc/db.php';
+
+function testMessage($condation, $message)
+{
+    if ($condation) {
+        echo "<div class='mt-5 alert alert-info mx-auto w-50'>
+<h3>  $message is Done </h3>
+    </div>";
+    } else {
+        echo "<div class=' mt-5  alert alert-danger mx-auto w-50'>
+        <h3>  $message is False </h3>
+            </div>";
+    }
+}
+
 if (isset($_POST['send'])) {
     $name = $_POST['name'];
     $legel_no = $_POST['legel_no'];
@@ -14,6 +23,8 @@ if (isset($_POST['send'])) {
     $phone = $_POST['phone'];
     $addess = $_POST['addess'];
     $password = $_POST['password'];
+    $approve = $_POST['approve'];
+
     // Image Code
     $image_name = $_FILES['image']['name'];
     $image_tmp = $_FILES['image']['tmp_name'];
@@ -23,10 +34,15 @@ if (isset($_POST['send'])) {
     } else {
         echo "image Uploaded false";
     }
-    $adminId = $_POST['adminId'];
-    $insert = "INSERT INTO `travel_agency` VALUES (NULL ,'$name',$legel_no,$bank_account,'$phone','$addess','$password','$image_name',$adminId)";
-    $i = mysqli_query($conn, $insert);
-    testMessage($i, "Insert Travel Agency");
+    if ($approve == 1) {
+        $insert = "INSERT INTO `travel_agency` VALUES (NULL ,'$name',$legel_no,$bank_account,'$phone','$addess','$password','$image_name',DEFAULT)";
+        $i = mysqli_query($conn, $insert);
+        testMessage($i, "Sign up ");
+    } else {
+        echo "<div class=' mt-5  alert alert-danger mx-auto w-50'>
+        <h3>   Sorry you cant use this Site</h3>
+            </div>";
+    }
 }
 
 
@@ -69,7 +85,7 @@ if (isset($_GET['edit'])) {
         <?php if ($update) : ?>
             <h1 class="display-1 text-center text-warning"> travel_agency Update page </h1>
         <?php else : ?>
-            <h1 class="display-1 text-center text-info">travel_agency Add page </h1>
+            <h1 class="display-1 text-center text-info">Sign Up As travel_agency </h1>
         <?php endif; ?>
         <nav>
             <ol class="breadcrumb">
@@ -116,12 +132,9 @@ if (isset($_GET['edit'])) {
                                     <input type="file" class="form-control" name="image">
                                 </div>
                                 <div class="form-group">
-                                    <label> Admin ID </label>
-                                    <select name="adminId" class="form-control">
-                                        <?php foreach ($admins as $data) { ?>
-                                            <option value="<?php echo $data['id']; ?> "> <?php echo $data['name']; ?> </option>
-                                        <?php } ?>
-                                    </select>
+                                    <label><a href="../terms.html"> Terms & conditions:</a> </label>
+                                    <br>
+                                    Approve <input type="radio" value="1" name="approve">
                                 </div>
                                 <?php if ($update) : ?>
                                     <button name="update" class="mt-4 btn btn-primary btn-block w-50 mx-auto">Update Data </button>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2022 at 09:11 PM
+-- Generation Time: Jun 10, 2022 at 09:02 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -43,7 +43,8 @@ CREATE TABLE `admin` (
 INSERT INTO `admin` (`id`, `name`, `password`, `email`, `job`, `image`) VALUES
 (1, 'ahmed', '123', 'ahmed@gmail.com', '', ''),
 (2, 'ahmed tofiq', '123', 'm.m.m.elhossin@gmail.com', '', 'edit2.png'),
-(4, 'Mohamed El hosisny', '123', 'm.m.m.elhossin@gmail.com', 'Web developer', '63346499.jfif');
+(4, 'Mohamed El hosisny', '123', 'm.m.m.elhossin@gmail.com', 'Web developer', '63346499.jfif'),
+(5, 'islam', '1234', 'islam@gmail.com', 'CEO', 'Gull_portrait_ca_usa.jpg');
 
 -- --------------------------------------------------------
 
@@ -58,14 +59,6 @@ CREATE TABLE `payment` (
   `userId` int(11) NOT NULL,
   `tripId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `payment`
---
-
-INSERT INTO `payment` (`id`, `amount`, `paymentDate`, `userId`, `tripId`) VALUES
-(4, 5000, '2022-06-05 03:56:09', 1, 7),
-(5, 5000, '2022-06-05 03:57:40', 1, 7);
 
 -- --------------------------------------------------------
 
@@ -82,15 +75,16 @@ CREATE TABLE `travel_agency` (
   `addess` varchar(66) NOT NULL,
   `password` varchar(50) NOT NULL,
   `image` varchar(122) NOT NULL,
-  `adminId` int(11) NOT NULL
+  `status` varchar(11) NOT NULL DEFAULT 'waiting'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `travel_agency`
 --
 
-INSERT INTO `travel_agency` (`id`, `name`, `legel_no`, `bank_account`, `phone`, `addess`, `password`, `image`, `adminId`) VALUES
-(8, 'egy sky', 2310021, 2147483647, '01117433885', 'naser city', '123', 'Gull_portrait_ca_usa.jpg', 4);
+INSERT INTO `travel_agency` (`id`, `name`, `legel_no`, `bank_account`, `phone`, `addess`, `password`, `image`, `status`) VALUES
+(10, '$name', 321, 32, '$phone', '$addess', '$password', '$image_name', 'waiting'),
+(11, 'Mohamed El hosisny', 2310021, 2147483647, '01117433885', 'naser city', '123', '63346499.jfif', 'waiting');
 
 -- --------------------------------------------------------
 
@@ -107,16 +101,6 @@ CREATE TABLE `trips` (
   `image` varchar(255) NOT NULL,
   `agency_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `trips`
---
-
-INSERT INTO `trips` (`id`, `state`, `price`, `description`, `date`, `image`, `agency_id`) VALUES
-(7, 'Aswan', 5000, 'ziad very good person ', '2022-06-22', 'pexels-photo-227507.jpeg', 8),
-(9, 'luxer', 2000, 'gfdsgfdsg', '2022-07-06', '63346499.jfif', 8),
-(10, 'alex', 1223, 'fsdafsd', '2022-06-29', 'pexels-photo-227507.jpeg', 8),
-(11, 'mansora', 2012, 'fsdafsd', '2022-06-14', 'Gull_portrait_ca_usa.jpg', 8);
 
 -- --------------------------------------------------------
 
@@ -142,7 +126,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `age`, `national_id`, `email`, `password`, `address`, `phone`, `gender`) VALUES
-(1, 'mohamed ', 'elhossiny', 33, 2147483647, 'mohamedaymanmoudy1@gmail.com', '123', 'asdfdsfasfdsafdsafdsaf', '01117433885', 'male');
+(1, 'mohamed ', 'elhossiny', 33, 2147483647, 'mohamedaymanmoudy1@gmail.com', '123', 'asdfdsfasfdsafdsafdsaf', '01117433885', 'male'),
+(2, 'hanan', 'mohamed', 12, 2147483647, 'hanan@gmail.com', '1234', 'nacer city', '0122215562', 'female');
 
 --
 -- Indexes for dumped tables
@@ -166,8 +151,7 @@ ALTER TABLE `payment`
 -- Indexes for table `travel_agency`
 --
 ALTER TABLE `travel_agency`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `adminId` (`adminId`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `trips`
@@ -190,31 +174,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `travel_agency`
 --
 ALTER TABLE `travel_agency`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `trips`
 --
 ALTER TABLE `trips`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -226,12 +210,6 @@ ALTER TABLE `users`
 ALTER TABLE `payment`
   ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`tripId`) REFERENCES `trips` (`id`);
-
---
--- Constraints for table `travel_agency`
---
-ALTER TABLE `travel_agency`
-  ADD CONSTRAINT `travel_agency_ibfk_1` FOREIGN KEY (`adminId`) REFERENCES `admin` (`id`);
 
 --
 -- Constraints for table `trips`
